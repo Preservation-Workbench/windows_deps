@@ -1,3 +1,3 @@
 # windows_deps
 
-Scripts to create portable dependency bundles
+Scripts to create portable dependency bundles for windows
