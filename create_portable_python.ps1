@@ -28,7 +28,7 @@ if(-Not (Test-Path "$pythonEmbeddedZipExtractedPath\get-pip.py")) {
     $url = "https://bootstrap.pypa.io/get-pip.py"
     $output = "$pythonEmbeddedZipExtractedPath\get-pip.py"
     Invoke-WebRequest -Uri $url -OutFile $output
-    & $pythonEmbeddedZipExtractedPath\python.exe $pythonEmbeddedZipExtractedPath\get-pip.py
+    & $pythonEmbeddedZipExtractedPath\python.exe $pythonEmbeddedZipExtractedPath\get-pip.py 'pip==20.2.4' # SSL error on later
     # Fix python path:
     $pthFile = "$pythonEmbeddedZipExtractedPath\python$pythonInstalledMajorVersion._pth"
     $text = [string]::Join("`n", (Get-Content $pthFile))
@@ -39,6 +39,6 @@ if(-Not (Test-Path "$pythonEmbeddedZipExtractedPath\get-pip.py")) {
     Copy-Item -Path "$pythonInstalledDir\DLLs\_tkinter.pyd" -Destination $pythonEmbeddedZipExtractedPath -Force
     Copy-Item -Path "$pythonInstalledDir\DLLs\tcl86t.dll" -Destination $pythonEmbeddedZipExtractedPath -Force
     Copy-Item -Path "$pythonInstalledDir\DLLs\tk86t.dll" -Destination $pythonEmbeddedZipExtractedPath -Force
-    $pipProcess = Start-Process -NoNewWindow -FilePath "$pythonEmbeddedZipExtractedPath\python.exe" -ArgumentList "-m pip install --upgrade --no-warn-script-location --force-reinstall JPype1==0.7.2 psutil jaydebeapi toposort flake8 autopep8 rope beautifulsoup4 lxml pygments petl wand ocrmypdf img2pdf filetype dulwich pdfy -t $pythonEmbeddedZipExtractedPath\Lib\site-packages" -PassThru; $pipProcess.WaitForExit()
+    $pipProcess = Start-Process -NoNewWindow -FilePath "$pythonEmbeddedZipExtractedPath\python.exe" -ArgumentList "-m pip install --upgrade --no-warn-script-location --force-reinstall JPype1 psutil jaydebeapi toposort flake8 autopep8 rope beautifulsoup4 lxml pygments petl filetype -t $pythonEmbeddedZipExtractedPath\Lib\site-packages" -PassThru; $pipProcess.WaitForExit()
     Compress-Archive -Path $pythonEmbeddedZipExtractedPath\* -DestinationPath "$pythonInstalledParentDir\python-$pythonInstalledVersion-embed-amd64.zip" -Force
 }
