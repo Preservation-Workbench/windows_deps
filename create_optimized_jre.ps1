@@ -22,7 +22,7 @@ If (-Not (Test-Path $jreDir)) {
     $jreSubDir = Get-ChildItem -Directory -Path "$tmpDir\$jdkDirName" | Select-Object -ExpandProperty FullName
     $jlinkPath = ("$jreSubDir\bin\jlink.exe")
     Write-Host "Generating optimized Java runtime..."
-    $process = Start-Process -NoNewWindow -FilePath $jlinkPath -ArgumentList "--output $jreDir --compress=2 --no-header-files --no-man-pages --module-path ..\jmods --add-modules java.base,java.datatransfer,java.desktop,java.management,java.net.http,java.security.jgss,java.sql,java.sql.rowset,java.xml,jdk.net,jdk.unsupported,jdk.unsupported.desktop,jdk.xml.dom" -PassThru -Wait
+    $process = Start-Process -NoNewWindow -FilePath $jlinkPath -ArgumentList "--output $jreDir --compress=2 --no-header-files --no-man-pages --module-path ..\jmods --add-modules java.base,java.datatransfer,java.desktop,java.management,java.net.http,java.security.jgss,java.sql,java.sql.rowset,java.xml,jdk.net,jdk.unsupported,jdk.unsupported.desktop,jdk.xml.dom,jdk.zipfs" -PassThru -Wait
     If ($process.ExitCode -eq 0) {
         Write-Host "Finished successfully"
     }
